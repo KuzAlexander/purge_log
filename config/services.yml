@@ -1,0 +1,13 @@
+parameters:
+  db:
+    url: 'mysql://user:pass@host:3306/committees?charset=utf8'
+
+services:
+  dbal:
+    class: Doctrine\DBAL\Connection
+    factory: ['Doctrine\DBAL\DriverManager', 'getConnection']
+    arguments: ['%db%']
+
+  clear:
+    class: Efko\PurgeLog\Service\ClearService
+    arguments: [ '@dbal' ]
