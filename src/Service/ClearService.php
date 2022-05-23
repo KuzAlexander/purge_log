@@ -13,10 +13,14 @@ class ClearService
         $this->db = $db;
     }
 
-    public function clear()
+    public function clear($config)
     {
-        print_r($this->db->getParams());
+        $queryBuilder = $this->db->createQueryBuilder();
 
-        return 'очищено';
+        $queryBuilder
+            ->delete($config['tableName'])
+            ->where($config['condition'])
+            ->execute()
+        ;
     }
 }

@@ -16,18 +16,22 @@ class ClearLog extends Command
     {
         $this
             ->setName('clear')
-            ->setDescription('Очищает логи')
-            ->setHelp('Очишает выбранную таблицу')
+            ->setDescription('Очищает таблицу по условию')
+            ->setHelp('Очишает таблицу по условию. Параметры задаются в conf.php')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $config = require_once dirname(__DIR__, 2) . '/conf.php';
+
+        $output->writeln("Идет очистка таблицы {$config['tableName']}...");
+
         /** @var ClearService $clearService */
         $clearService = $this->container->get('clear');
-        $statusSpaces = $clearService->clear();
+        $clearService->clear($config);
 
-        $output->writeln("Событие test $statusSpaces");
+        $output->writeln("Таблица {$config['tableName']} очищена...");
 
         return 0;
     }

@@ -1,6 +1,6 @@
 parameters:
   db:
-    url: 'mysql://user:pass@host:3306/committees?charset=utf8'
+    url: 'mysql://user:password@localhost:3306/tableName?charset=utf8'
 
 services:
   dbal:
@@ -10,4 +10,4 @@ services:
 
   clear:
     class: Efko\PurgeLog\Service\ClearService
-    arguments: [ '@dbal' ]
+    arguments: ['@dbal']
