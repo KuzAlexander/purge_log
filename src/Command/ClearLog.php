@@ -23,15 +23,17 @@ class ClearLog extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $config = require_once dirname(__DIR__, 2) . '/conf.php';
+        $tables = require_once dirname(__DIR__, 2) . '/conf.php';
 
-        $output->writeln("Идет очистка таблицы {$config['tableName']}...");
+        foreach ($tables as $table) {
+            $output->writeln("Идет очистка таблицы {$table['name']} по условию {$table['condition']}...");
 
-        /** @var ClearService $clearService */
-        $clearService = $this->container->get('clear');
-        $clearService->clear($config);
+            /** @var ClearService $clearService */
+            $clearService = $this->container->get('clear');
+            $clearService->clear($table);
 
-        $output->writeln("Таблица {$config['tableName']} очищена...");
+            $output->writeln("Таблица {$table['name']} очищена...");
+        }
 
         return 0;
     }
