@@ -4,6 +4,7 @@ namespace Efko\PurgeLog\Command;
 
 use Efko\PurgeLog\Service\ClearService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -17,15 +18,24 @@ class ClearLog extends Command
         $this
             ->setName('clear')
             ->setDescription('Очищает таблицу по условию')
-            ->setHelp('Очишает таблицу по условию. Параметры задаются в conf.php')
+            ->setHelp('Очишает таблицу по условию. Параметры задаются в config.php')
+            ->addArgument('path', InputArgument::REQUIRED)
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $tables = require_once dirname(__DIR__, 2) . '/conf.php';
+        $path = $input->getArgument('path');
 
-        foreach ($tables as $table) {
+        if (!file_exists($path)) {
+            $output->writeln("Файла $path не существует");
+
+            return 0;
+        }
+
+        $config = require $path;
+
+        foreach ($config as $table) {
             $output->writeln("Идет очистка таблицы {$table['name']} по условию {$table['condition']}...");
 
             /** @var ClearService $clearService */
