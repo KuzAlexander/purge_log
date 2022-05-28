@@ -34,6 +34,10 @@ return [
     ],
 ];
 ```
+### Настроить подключение к БД
+```
+/vendor/efko/purge-log/config/services.yml
+```
 
 ### В консоле выполнить 
 ```
