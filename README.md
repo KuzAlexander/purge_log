@@ -6,26 +6,23 @@ composer require efko/purge-log
 ```
 
 ### В корне проекта создать bin/console
-```
-#!/usr/bin/env php
-<?php
-    require_once dirname(__DIR__).'/vendor/autoload.php';
-    
-    use Efko\PurgeLog\Application;
-    use Efko\PurgeLog\Command\ClearLog;
-    
-    $containerBuilder = require dirname(__DIR__) . '/config/bootstrap.php';
-    
-    $application = new Application($containerBuilder);
-    
-    $application->add(new ClearLog());
-    
-    $application->run();
+```php
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+use Efko\PurgeLog\Application;
+use Efko\PurgeLog\Command\ClearLog;
+
+$containerBuilder = require_once dirname(__DIR__) . '/vendor/efko/purge-log/config/bootstrap.php';
+
+$application = new Application($containerBuilder);
+
+$application->add(new ClearLog());
+
+$application->run();
 ```
 
 ###  В корне проекта создать config.php
-```
-<?php
+```php
 return [
     'table1' => [
         'name' => 'vap_common_file',
@@ -40,5 +37,5 @@ return [
 
 ### В консоле выполнить 
 ```
-symfony console clear 'путь до config.php'
+symfony console clear config.php
 ```
