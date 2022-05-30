@@ -1,4 +1,15 @@
 #!/usr/bin/env php
 <?php
-$app = require __DIR__ . '/../app/phinx.php';
-$app->run();
+
+require_once '/vendor/autoload.php';
+
+use Efko\PurgeLog\Application;
+use Efko\PurgeLog\Command\ClearLog;
+
+$containerBuilder = require dirname(__DIR__) . '/config/bootstrap.php';
+
+$application = new Application($containerBuilder);
+
+$application->add(new ClearLog());
+
+$application->run();
