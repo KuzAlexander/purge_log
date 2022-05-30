@@ -20,5 +20,6 @@
             "name": "A.Kuzmichev",
             "email": "a.kuzmichev@efko.ru"
         }
-    ]
+    ],
+    "bin": ["bin/purge-log"]
 }

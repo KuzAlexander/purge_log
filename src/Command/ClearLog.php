@@ -19,31 +19,27 @@ class ClearLog extends Command
             ->setName('clear')
             ->setDescription('Очищает таблицу по условию')
             ->setHelp('Очишает таблицу по условию. Параметры задаются в config.php')
-            ->addArgument('name', InputArgument::REQUIRED)
+            ->addArgument('path', InputArgument::REQUIRED)
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $nameFile = $input->getArgument('name');
+        $path = $input->getArgument('path');
 
-        $fullPath = dirname(__FILE__);
-        $itemNumber = mb_strpos($fullPath, 'vendor');
-        $pathToFile = substr($fullPath, 0, $itemNumber) . $nameFile;
-
-        if (!file_exists($pathToFile)) {
-            $output->writeln("Файла $pathToFile не существует");
+        if (!file_exists($path)) {
+            $output->writeln("Файла $path не существует");
 
             return 0;
         }
 
-        $file = require $pathToFile;
+        $file = require $path;
 
+        /** @var ClearService $clearService */
+        $clearService = $this->container->get('clear');
         foreach ($file as $table) {
             $output->writeln("Идет очистка таблицы {$table['name']} по условию {$table['condition']}...");
 
-            /** @var ClearService $clearService */
-            $clearService = $this->container->get('clear');
             $clearService->clear($table);
 
             $output->writeln("Таблица {$table['name']} очищена...");

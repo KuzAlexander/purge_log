@@ -1,0 +1,3 @@
+parameters:
+  db:
+    url: 'mysql://user:password@localhost:3306/tableName?charset=utf8'

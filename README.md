@@ -5,22 +5,6 @@
 composer require efko/purge-log
 ```
 
-### В корне проекта создать bin/console
-```php
-require_once dirname(__DIR__).'/vendor/autoload.php';
-
-use Efko\PurgeLog\Application;
-use Efko\PurgeLog\Command\ClearLog;
-
-$containerBuilder = require_once dirname(__DIR__) . '/vendor/efko/purge-log/config/bootstrap.php';
-
-$application = new Application($containerBuilder);
-
-$application->add(new ClearLog());
-
-$application->run();
-```
-
 ###  В корне проекта создать config.php
 ```php
 return [
@@ -36,10 +20,10 @@ return [
 ```
 ### Настроить подключение к БД
 ```
-/vendor/efko/purge-log/config/services.yml
+/vendor/efko/purge-log/config/parameters.dist.yml
 ```
 
 ### В консоле выполнить 
 ```
-symfony console clear config.php
+symfony console clear 'paht/to/file/config.php
 ```
