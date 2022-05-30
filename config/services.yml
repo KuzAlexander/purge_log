@@ -1,5 +1,5 @@
 imports:
-  - { resource: parameters.dist.yml }
+  - { resource: parameters.yml }
 
 services:
   dbal:

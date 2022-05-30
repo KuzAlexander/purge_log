@@ -5,7 +5,7 @@
 composer require efko/purge-log
 ```
 
-###  В корне проекта создать config.php
+### Создать файл config.php
 ```php
 return [
     'table1' => [
@@ -18,9 +18,15 @@ return [
     ],
 ];
 ```
+
+### Скопировать файл
+```
+cp parameters.dist.yml parameters.yml 
+```
+
 ### Настроить подключение к БД
 ```
-/vendor/efko/purge-log/config/parameters.dist.yml
+/vendor/efko/purge-log/config/parameters.yml
 ```
 
 ### В консоле выполнить 
